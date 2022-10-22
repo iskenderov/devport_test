@@ -19,26 +19,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
+        'phone',
+        'isActive',
+        'secure_key',
+        'expired_at'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function scopeActive()
+    {
+        return $this->where('isActive', true)
+            ->where('expired_at', '>', now());
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function rollHistory()
+    {
+        return $this->hasMany(RollHistory::class);
+    }
 }
