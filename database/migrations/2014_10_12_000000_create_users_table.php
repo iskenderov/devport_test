@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('phone');
             $table->boolean('isActive')->default(true);
+            $table->boolean('isAdmin')->default(false);
             $table->string('secure_key');
             $table->dateTime('expired_at');
             $table->rememberToken();
