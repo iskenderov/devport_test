@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +25,6 @@ Route::get('/game', [GameController::class, 'index'])
 
 Route::middleware('auth')
     ->group(function () {
-
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::controller(GameController::class)
@@ -32,7 +33,6 @@ Route::middleware('auth')
             ->group(function () {
                 Route::post('/roll', 'roll')->name('roll');
                 Route::post('/history', 'showHistory')->name('history');
-
             });
 
         Route::controller(SettingsController::class)
@@ -45,11 +45,18 @@ Route::middleware('auth')
             });
     });
 
-Route::resource('user',UserController::class)
+Route::resource('user', UserController::class)
     ->middleware('can:admin')
     ->except('show');
 
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
 
+    Route::post('register', [RegisteredUserController::class, 'store']);
+});
 
-
-require __DIR__ . '/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+});

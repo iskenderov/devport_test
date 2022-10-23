@@ -12,16 +12,16 @@ class EnsureTokenIsValid
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse) $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::hasUser()) {
+        if (! Auth::hasUser()) {
             $user = User::active()->where('secure_key', $request->key)->first();
 
-            if (!$user) {
+            if (! $user) {
                 return redirect(route('register'));
             }
 

@@ -7,7 +7,9 @@ use App\Service\Reward\Enums\StatusEnum;
 class Generator
 {
     private StatusEnum $status;
+
     private int $rewards = 0;
+
     private int $number;
 
     public function __construct()
@@ -30,8 +32,8 @@ class Generator
     private function setReward(): void
     {
         $this->rewards = match (true) {
-            $this->number >= 900 => $this->number * 0.7,
-            $this->number >= 600 => $this->number * 0.5,
+            $this->number > 900 => $this->number * 0.7,
+            $this->number > 600 => $this->number * 0.5,
             $this->number > 300 => $this->number * 0.3,
             $this->number <= 300 => $this->number * 0.1,
             default => 0,
@@ -52,5 +54,4 @@ class Generator
     {
         return $this->number;
     }
-
 }
