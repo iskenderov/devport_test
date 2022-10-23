@@ -8,13 +8,15 @@ class Generator
 {
     private StatusEnum $status;
 
-    private int $rewards = 0;
+    private float $rewards = 0;
 
-    private int $number;
-
-    public function __construct()
+    public function __construct(private readonly int $number)
     {
-        $this->number = mt_rand(0, 1000);
+        $this->run();
+    }
+
+    public function run(): void
+    {
         $this->setStatus();
 
         if ($this->status == StatusEnum::WIN) {
@@ -31,7 +33,7 @@ class Generator
 
     private function setReward(): void
     {
-        $this->rewards = match (true) {
+        $this->rewards =  match (true) {
             $this->number > 900 => $this->number * 0.7,
             $this->number > 600 => $this->number * 0.5,
             $this->number > 300 => $this->number * 0.3,
@@ -45,7 +47,7 @@ class Generator
         return $this->status;
     }
 
-    public function getReward(): int
+    public function getReward(): float
     {
         return $this->rewards;
     }

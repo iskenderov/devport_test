@@ -15,15 +15,19 @@ class GameController extends Controller
         return view('game.index');
     }
 
-    public function roll(Generator $rewardGenerator)
+    public function roll()
     {
-        event(new RollingEvent($rewardGenerator));
+        $number = rand(1, 1000);
+        $generator = new Generator($number);
+        $generator->run();
 
-        if ($rewardGenerator->getStatus() === StatusEnum::WIN) {
-            return view('game.win')->with(['reward' => $rewardGenerator]);
+        event(new RollingEvent($generator));
+
+        if ($generator->getStatus() === StatusEnum::WIN) {
+            return view('game.win')->with(['reward' => $generator]);
         }
 
-        return view('game.loose')->with(['reward' => $rewardGenerator]);
+        return view('game.loose')->with(['reward' => $generator]);
     }
 
     public function showHistory()

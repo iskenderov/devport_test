@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->integer('number');
-            $table->integer('reward');
+            $table->float('reward');
             $table->timestamps();
         });
     }
