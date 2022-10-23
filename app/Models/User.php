@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'phone',
         'isActive',
+        'isAdmin',
         'secure_key',
         'expired_at'
     ];

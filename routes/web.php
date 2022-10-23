@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\SettingsController;
@@ -43,5 +44,12 @@ Route::middleware('auth')
                 Route::post('/refresh_link', 'refreshLink')->name('refresh_link');
             });
     });
+
+Route::resource('user',UserController::class)
+    ->middleware('can:admin')
+    ->except('show');
+
+
+
 
 require __DIR__ . '/auth.php';
