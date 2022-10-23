@@ -33,7 +33,7 @@ class GameController extends Controller
             ->orderByDesc('id')
             ->take(HistoryCountEnum::COUNT->value)
             ->get();
-        return view('game.history')->with(['history' => $history]);
 
+        return view('game.history')->with(['history' => $history]);
     }
 }

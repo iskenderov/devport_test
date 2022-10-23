@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateRollHistoryAction
 {
-    public function run(RollingEvent $event, User $user)
+    public function run(RollingEvent $event, User $user): void
     {
         $user->rollHistory()->create([
             'user_id' => Auth::id(),

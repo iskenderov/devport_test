@@ -4,9 +4,6 @@ namespace App\Listeners;
 
 use App\Actions\CreateRollHistoryAction;
 use App\Events\RollingEvent;
-use App\Models\RollHistory;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateRollHistoryListener
@@ -24,10 +21,10 @@ class UpdateRollHistoryListener
     /**
      * Handle the event.
      *
-     * @param object $event
+     * @param  RollingEvent  $event
      * @return void
      */
-    public function handle(RollingEvent $event)
+    public function handle(RollingEvent $event): void
     {
         $this->historyAction->run($event, Auth::user());
     }

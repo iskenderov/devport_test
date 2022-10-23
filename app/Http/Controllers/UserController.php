@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     public function index()
     {
         return view('user.index')->with(['users' => User::paginate(10)]);
@@ -48,6 +47,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return redirect(route('user.index'));
     }
 }
